@@ -1,7 +1,7 @@
 from flask import Flask, redirect
 from flask_sqlalchemy import SQLAlchemy
-from db import db
-from db.models import users
+from Db import db
+from Db.models import users
 from flask_login import LoginManager
 
 app = Flask(__name__)
@@ -17,6 +17,19 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{user_db}:{password}@{hos
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
+
+login_manager = LoginManager()
+login_manager.login_view = "rgz.login"
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_users(user_id):
+    return users.query.get(int(user_id))
+
+app.register_blueprint(rgz)
+
+#if __name__ == '__main__':
+ #   app.run(debug=True)
 
 @app.route("/")
 @app.route("/index")
