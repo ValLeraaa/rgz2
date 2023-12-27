@@ -5,9 +5,7 @@ class users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), nullable=False, unique=True)
     password = db.Column(db.String(102), nullable=False)
-
-    def __repr__(self):
-        return f'id:{self.id}, username:{self.username}'
+    is_active = db.Column(db.Boolean, default=True)
 
 class books(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -20,5 +18,3 @@ class books(db.Model):
     is_favorite = db.Column(db.Boolean)
     likes = db.Column(db.Integer)
 
-    def __repr__(self):
-        return f'title:{self.title}, article_text:{self.article_text}, cover:{self.cover}, author:{self.author}, number_of_pages:{self.number_of_pages}, publishing_house:{self.publishing_house}'

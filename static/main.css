@@ -1,0 +1,70 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif; 
+    background-color: #D2B48C; 
+}
+
+main{
+    margin-bottom: 40px;
+    padding: 10px;
+}
+
+.glavdiv {
+    padding: 16px 0;
+    background-color: lightgray;
+}
+
+.ul {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+.glav {
+    display: inline-block;
+    margin-left: 10px;
+    text-transform: uppercase;
+}
+
+.book {
+    display: inline-block;
+    margin-left: 10px;
+    text-transform: uppercase;
+}
+
+.error {
+    color: red;
+}
+
+p {
+    text-align: center;
+}
+
+.modal {
+    display: none;
+    z-index: 100;
+    box-shadow: 3px 3px 5px black;
+    width: 400px;
+    left: 50%;
+    margin-left: -200px;
+    position: relative;
+    padding: 20px;
+}
+
+
+header {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: lightgray;
+}
+
+footer {
+    margin-top: 20px;
+    padding: 10px;
+    background: lightgray;
+    text-align: right;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}

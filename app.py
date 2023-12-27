@@ -1,8 +1,9 @@
 from flask import Flask, redirect
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy 
 from Db import db
 from Db.models import users
 from flask_login import LoginManager
+import psycopg2
 
 from rgz import rgz
 
