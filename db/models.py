@@ -7,7 +7,7 @@ class users(db.Model):
     password = db.Column(db.String(102), nullable=False)
 
     def __repr__(self):
-        retern f'id:{self.id}, username:{self.username}'
+        return f'id:{self.id}, username:{self.username}'
 
 class books(db.Model):
     id = db.Column(db.Integer, primary_key=True)
