@@ -4,6 +4,8 @@ from Db import db
 from Db.models import users
 from flask_login import LoginManager
 
+from rgz import rgz
+
 app = Flask(__name__)
 
 app.secret_key = "123"
@@ -27,33 +29,3 @@ def load_users(user_id):
     return users.query.get(int(user_id))
 
 app.register_blueprint(rgz)
-
-#if __name__ == '__main__':
- #   app.run(debug=True)
-
-@app.route("/")
-@app.route("/index")
-def start():
-    return redirect("/menu", code=302)
-
-@app.route("/menu")
-def menu():
-    return """
-<!doctype html>
-<html>
-    <head>
-        <title>Книги</title>
-    </head>
-    <body>
-        <header>
-        НГТУ, ФБ, Расчетно-графическая работа
-        </header>
-
-        <h1>Книги</h1>
-
-        <footer>
-            &copy; Пахомова Валерия, ФБИ-11, 3 курс, 2023
-        </footer>
-    </body>
-</html>
-"""
