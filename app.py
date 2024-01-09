@@ -1,7 +1,7 @@
 from flask import Flask, redirect
 from flask_sqlalchemy import SQLAlchemy 
 from Db import db
-from Db.models import users
+from Db.models import user
 from flask_login import LoginManager
 import psycopg2
 
@@ -26,7 +26,7 @@ login_manager.login_view = "rgz.login"
 login_manager.init_app(app)
 
 @login_manager.user_loader
-def load_users(user_id):
-    return users.query.get(int(user_id))
+def load_user(user_id):
+    return user.query.get(int(user_id))
 
 app.register_blueprint(rgz)
