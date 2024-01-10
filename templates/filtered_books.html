@@ -1,0 +1,20 @@
+{% extends "str.html" %}
+
+{% block main %}
+    <form action="/filter_books" method="post">
+        <input type="text" name="title" placeholder="Название">
+        <input type="text" name="author" placeholder="Автор">
+        <input type="number" name="number_of_pages" placeholder="Количество страниц">
+        <input type="text" name="publishing_house" placeholder="Издательство">
+        <button type="submit">Применить фильтр</button>
+    </form>
+    <h1>Filtered Books</h1>
+    <ul>
+        {% for book in books %}
+            <li>{{ book.cover }}<br>
+            {{ book.title }} {{ book.author }}<br>
+            Количество страниц: {{ book.number_of_pages }}<br>
+            Издательство{{ book.publishing_house }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
