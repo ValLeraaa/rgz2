@@ -2,21 +2,25 @@
 
 {% block main %}
     <h1>Наши книги</h1>
+    <a href="/filter_books">Фильтр</a>
     <ul style="list-style-type: decimal">
         {% for book in books %}
             <li>{{ book.cover }}<br>
-            <b>{{ book.title }}</b>, {{ book.author }}<br>
+            <b>"{{ book.title }}"</b>, {{ book.author }}<br>
             Количество страниц: {{ book.number_of_pages }}<br>
             Издательство: {{ book.publishing_house }}<br>
             {% if current_user.is_authenticated and current_user.role == 'admin' %}
-            <a href="/delete_books/">Удалить</a>
-            <a href="/edit_book/">Редактировать</a>
-        {% endif %}</li>
+            <a href="/edit/{{ book.id }}">Редактировать</a>
+            <form action="/delete/{{ book.id }}" method="post">
+              <input type="submit" value="Уданение">
+            </form>
+            {% endif %}</li>
         {% endfor %}
     </ul>
- 
+    {% if show_next_button %}
+        <a href="/next, page=page">Показать следующие</a>
+    {% endif %}
     {% if current_user.is_authenticated and current_user.role == 'admin' %}
         <a href="/new_books">Добавить новую книгу</a>
     {% endif %}
-    <button id="showNextBooks" data-offset="{{ books|length }}" data-limit="20">Показать следующие</button>
 {% endblock %}

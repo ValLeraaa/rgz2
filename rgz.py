@@ -6,39 +6,58 @@ from flask_login import login_user, login_required, current_user, logout_user
 import string
 
 rgz = Blueprint("rgz", __name__)
+books_per_page = 20
 
 @rgz.route("/books")
 @login_required
 def book():
     my_books = users.query.filter_by(id = current_user.id).all()
-    return render_template("books.html", books = my_books, username = current_user.username)
+    page = int(request.args.get('page', 1))
+    offset = (page - 1) * books_per_page
+    books_list = books.execute(f"SELECT * FROM books LIMIT {books_per_page} OFFSET {offset}").fetchall()
+    show_next_button = books.execute("SELECT COUNT(*) FROM books OFFSET :offset+20 LIMIT 1").fetchone()[0]
+    return render_template("books.html", books = my_books, username = current_user.username, books_list = books_list, page=page, show_next_button=show_next_button)
+
+@rgz.route('/next')
+def next_books():
+    page = int(request.args.get('page', 1)) + 1
+    return redirect('book_list', page=page)
 
 @rgz.route('/new_books', methods=['GET', 'POST'])
 def new_books():
     if request.method == 'POST':
         title = request.form['title']
- # Сохранение файла и получение пути
         author = request.form['author']
         number_of_pages = request.form['page_count']
         publishing_house = request.form['publisher']
-
         new_book = books(title=title, author=author, number_of_pages=number_of_pages, publishing_house=publishing_house)
         db.session.add(new_book)
         db.session.commit()
-
         return redirect('/str')
     return render_template('new_books.html')
 
-@rgz.route('/delete_books/<int:books_id>', methods=['POST'])
-def delete_books(books_id):
-    return render_template('books.html', book_id=books_id)
+@rgz.route('/delete/<int:book_id>', methods=['POST'])
+def delete_book(book_id):
+    book = books.query.get(book_id)
+    if book is not None:
+        db.session.delete(book)
+        db.session.commit()
+    return redirect('/str')
 
-@rgz.route('/edit_books/<int:books_id>', methods=['GET', 'POST'])
-def edit_books(book_id):
-        if request.method == 'GET':
-            return render_template('edit_books.html')
-        elif request.method == 'POST':
+@rgz.route('/edit/<int:book_id>', methods=['GET', 'POST'])
+def edit_book(book_id):
+    book = books.query.get(book_id)
+    if book is not None:
+        if request.method == 'POST':
+            book.title = request.form['title']
+            book.author = request.form['author']
+            book.number_of_pages = request.form['page_count']
+            book.publishing_house = request.form['publisher']
+            db.session.commit()
             return redirect('/str')
+        else:
+            return render_template('edit.html', book=book)
+
 
 @rgz.route('/filter_books', methods=['GET', 'POST'])
 def filter_books():
@@ -58,7 +77,7 @@ def filter_books():
             query = query.filter(books.number_of_pages == int(number_of_pages))
         if publishing_house:
             query = query.filter(books.publishing_house.ilike(publishing_house))
-        filtered_books = query.all()  # Получаем отфильтрованные книги
+        filtered_books = query.all()
         return render_template('filtered_books.html', books=filtered_books)
     
 @rgz.route("/register", methods=["GET", "POST"])
