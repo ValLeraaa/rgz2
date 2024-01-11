@@ -29,21 +29,16 @@ def new_books():
         return redirect('/str')
     return render_template('new_books.html')
 
-@rgz.route('/delete_books', methods=['POST'])
+@rgz.route('/delete_books/<int:books_id>', methods=['POST'])
 def delete_books(books_id):
-    # здесь будет код для отображения деталей книги по её ID
     return render_template('books.html', book_id=books_id)
 
-@rgz.route('/edit_books', methods=['GET', 'POST'])
+@rgz.route('/edit_books/<int:books_id>', methods=['GET', 'POST'])
 def edit_books(book_id):
-    # Проверяем, что пользователь аутентифицирован и является администратором
         if request.method == 'GET':
-            # Здесь будет код для отображения формы редактирования книги по её ID
             return render_template('edit_books.html')
         elif request.method == 'POST':
-            # Здесь будет код для обработки изменений в книге
-            # Например, обновление информации о книге в базе данных
-            return redirect('/str')  # перенаправляем на страницу с деталями книги
+            return redirect('/str')
 
 @rgz.route('/filter_books', methods=['GET', 'POST'])
 def filter_books():
@@ -128,6 +123,5 @@ def main():
     else:
         username = "Anon"
     all_books = books.query.all()
-    # Передаем книги в шаблон и отображаем их
     return render_template('books.html', username=username, books=all_books)
 

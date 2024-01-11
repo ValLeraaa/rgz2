@@ -29,6 +29,4 @@ login_manager.init_app(app)
 def load_user(user_id):
     return users.query.get(int(user_id))
 
-
-
 app.register_blueprint(rgz)
