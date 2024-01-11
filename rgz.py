@@ -1,4 +1,5 @@
 from flask import Blueprint, redirect, request, render_template
+from flask import Flask
 from Db import db
 from Db.models import users, books
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -15,15 +16,16 @@ def book():
     page = int(request.args.get('page', 1))
     offset = (page - 1) * books_per_page
     books_list = books.execute(f"SELECT * FROM books LIMIT {books_per_page} OFFSET {offset}").fetchall()
-    show_next_button = books.execute("SELECT COUNT(*) FROM books OFFSET :offset+20 LIMIT 1").fetchone()[0]
-    return render_template("books.html", books = my_books, username = current_user.username, books_list = books_list, page=page, show_next_button=show_next_button)
+    show_next_button = len(books) == books_per_page
+    return render_template("books.html", books = my_books, username = current_user.username, books_list = books_list, 
+                           page=page, show_next_button=show_next_button)
 
-@rgz.route('/next')
+@rgz.route("/next_books")
 def next_books():
     page = int(request.args.get('page', 1)) + 1
-    return redirect('book_list', page=page)
+    return redirect ('/str', page=page)
 
-@rgz.route('/new_books', methods=['GET', 'POST'])
+@rgz.route("/new_books", methods=['GET', 'POST'])
 def new_books():
     if request.method == 'POST':
         title = request.form['title']
@@ -36,7 +38,7 @@ def new_books():
         return redirect('/str')
     return render_template('new_books.html')
 
-@rgz.route('/delete/<int:book_id>', methods=['POST'])
+@rgz.route("/delete/<int:book_id>", methods=['POST'])
 def delete_book(book_id):
     book = books.query.get(book_id)
     if book is not None:
@@ -44,7 +46,7 @@ def delete_book(book_id):
         db.session.commit()
     return redirect('/str')
 
-@rgz.route('/edit/<int:book_id>', methods=['GET', 'POST'])
+@rgz.route("/edit/<int:book_id>", methods=['GET', 'POST'])
 def edit_book(book_id):
     book = books.query.get(book_id)
     if book is not None:
@@ -59,7 +61,7 @@ def edit_book(book_id):
             return render_template('edit.html', book=book)
 
 
-@rgz.route('/filter_books', methods=['GET', 'POST'])
+@rgz.route("/filter_books", methods=['GET', 'POST'])
 def filter_books():
     if request.method == "GET":
         return render_template("filtered_books.html")

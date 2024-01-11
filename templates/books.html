@@ -18,7 +18,7 @@
         {% endfor %}
     </ul>
     {% if show_next_button %}
-        <a href="/next, page=page">Показать следующие</a>
+        <a href="{{ url_for('next_books', page=page) }}">Показать следующие</a>
     {% endif %}
     {% if current_user.is_authenticated and current_user.role == 'admin' %}
         <a href="/new_books">Добавить новую книгу</a>
