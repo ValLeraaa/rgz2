@@ -3,7 +3,7 @@
 {% block main %}
     <h1>Наши книги</h1>
     <a href="/filter_books">Фильтр</a>
-    <ul style="list-style-type: decimal">
+    <ul style="list-style-type: none">
         {% for book in books %}
             <li>{{ book.cover }}<br>
             <b>"{{ book.title }}"</b>, {{ book.author }}<br>

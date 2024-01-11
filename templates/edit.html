@@ -1,24 +1,23 @@
 {% extends "str.html" %}
 
 {% block main %}
-<form method="post">
-    <div>
-        <label for="title">Название:</label>
-        <textarea id="text" name="title">{{ book.title }}</textarea>
-    </div>
-    <div>
-        <label for="author">Автор:</label>
-        <textarea id="text" name="author">{{ book.author }}</textarea>
-    </div>
-    <div>
-        <label for="page_count">Кол-во страниц:</label>
-        <textarea id="text" name="page_count">{{ book.number_of_pages }}</textarea>
-    </div>
-    <div>
-        <label for="publisher">Издательство:</label>
-        <textarea id="text" name="publisher">{{ book.publishing_house }}</textarea>
-    </div>
-    <button type="submit">Сохранить</button>
-</form>
-  
+    <form method="post">
+        <div>
+            <label for="title">Название:</label>
+            <textarea id="text" name="title">{{ book.title }}</textarea>
+        </div>
+        <div>
+            <label for="author">Автор:</label>
+            <textarea id="text" name="author">{{ book.author }}</textarea>
+        </div>
+        <div>
+            <label for="page_count">Количество страниц:</label>
+            <textarea id="text" name="page_count">{{ book.number_of_pages }}</textarea>
+        </div>
+        <div>
+            <label for="publisher">Издательство:</label>
+            <textarea id="text" name="publisher">{{ book.publishing_house }}</textarea>
+        </div>
+        <button type="submit">Сохранить</button>
+    </form>
 {% endblock %}

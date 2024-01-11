@@ -1,17 +1,18 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif; 
-    background-color: #D2B48C; 
+    background-color: #D2B48C;
+    color: black; 
 }
 
 main{
     margin-bottom: 40px;
     padding: 10px;
+    color: black;
 }
 
 .glavdiv {
     padding: 16px 0;
-    background-color: lightgray;
 }
 
 .ul {
@@ -53,15 +54,17 @@ p {
 
 
 header {
-    margin-bottom: 30px;
-    padding: 20px;
-    background: lightgray;
+    margin-bottom: 20px;
+    background: peru;
+    position: fixed;
+    left: 0;
+    right: 0;
 }
 
 footer {
     margin-top: 20px;
     padding: 10px;
-    background: lightgray;
+    background: peru;
     text-align: right;
     position: fixed;
     bottom: 0;
